@@ -1,0 +1,126 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}
+    Topshiriqlar
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+
+    <!-- NAVBAR -->
+    {% include 'task/navbar.html' %}
+
+    <!-- MODALS -->
+    {% include 'task/modal_create.html' %}
+    {% include 'task/modal_edit.html' %}
+    {% include 'task/modal_delete.html' %}
+    {% include 'task/modal_detail.html' %}
+
+    <!-- TABLE -->
+    {% if tasks %}
+        <table class="table table-hover mt-5">
+
+            <!-- HEAD -->
+            <thead>
+            <tr>
+                <!-- TASK COUNT -->
+                <th class="w-75" scope="col"><span class="text-{{ class }}">{{ sms }} </span> topshiriqlar <b
+                        class="badge text-bg-{{ class }}">
+                    {{ tasks|length }}
+                </b> ta.
+                </th>
+                <!-- EDIT -->
+                <th class="text-center" scope="col">O'zgartirish</th>
+                <!-- DELETE -->
+                {% if task_code != "DELETE" and task_code != "DONE & DELETE" %}
+                    <th class="text-center" scope="col">O'chirish</th>
+                {% endif %}
+            </tr>
+            </thead>
+
+            <!-- BODY -->
+            <tbody>
+
+            {% for task in tasks %}
+                <tr>
+                    <!-- HEADER -->
+                    <td class="align-middle" data-bs-toggle="modal" data-bs-target="#exampleModalDetail"
+                        data-task-id="{{ task.id }}"
+                        data-task-title="{{ task.title }}"
+                        data-task-description="{{ task.description }}"
+                        data-task-done="{{ task.is_done }}"
+                        data-task-deleted="{{ task.is_delete }}"
+                        data-task-created="{{ task.created_at }}"
+                        data-task-updated="{{ task.updated_at }}">
+
+                        <!-- TODO TITLE -->
+                        <h5 class="card-title">
+                            <a href="#">
+                                {{ task.title|truncatechars:40 }}
+                            </a>
+                        </h5>
+
+                        <!-- TODO DATETIME -->
+                        <div class="align-middle">
+                            <small class="opacity-75">
+                                <span class="badge text-bg-{{ task.css_class }}">{{ task.status }}</span>
+                                <i class="bi bi-calendar2-event"></i>
+                                {{ task.updated_at| date }}</small>
+                            <small class="float-end opacity-75">
+                                <i class="bi bi-clock-history"></i>
+                                {{ task.updated_at | time }}</small>
+                        </div>
+
+                    </td>
+
+                    <!-- EDIT BUTTON -->
+                    <td class="text-center align-middle">
+                        <button type="submit" class="btn btn-outline-warning" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalEdit"
+                                data-task-id="{{ task.id }}"
+                                data-task-title="{{ task.title }}"
+                                data-task-description="{{ task.description }}"
+                                data-task-done="{{ task.is_done }}"
+                                data-task-deleted="{{ task.is_delete }}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+
+                    <!-- DELETE BUTTON -->
+                    {% if task.status != 'DELETE' and task.status != 'DONE & DELETE' %}
+                        <td class="text-center align-middle">
+                            <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalDelete"
+                                    data-task-id="{{ task.id }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- PAGINATION -->
+        {% include 'task/pagenation.html' %}
+
+    {% else %}
+
+        <!-- 404 NOT FOUND -->
+        <div class="d-flex justify-content-center mt-5">
+            <img src="{% static 'task/img/404.png' %}" class="w-25 text-center" alt="rasm">
+        </div>
+        <h1 class="text-center">Hech qanday ma'lumot topilmadi!</h1>
+
+        <!-- GO BACK BUTTON -->
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{% url 'home-view' %}" class="btn btn-dark">
+                <i class="bi bi-arrow-bar-left"></i>
+                Bosh sahifaga qaytish
+            </a>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
