@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Manager
-
 from task.managers import TaskTodotManager, TaskDoneManager, TaskDeletedManager, TaskDoneDeletedManager
 
 
@@ -35,3 +34,5 @@ class Task(models.Model):
     def css_class(self):
         cls = "dark" if self.is_done and self.is_delete else "success" if self.is_done else "danger" if self.is_delete else "warning"
         return cls
+
+

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from accounts.forms import SignUpForm, LoginForm
 
@@ -13,6 +14,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            messages.success(request, 'Shaxsiy kabinetga xush kelibsiz!')
             return redirect('home-view')
     else:
         form = SignUpForm()
@@ -25,6 +27,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, "Siz hozir login qildingiz!")
             return redirect('home-view')
     else:
         form = LoginForm()
@@ -33,4 +36,5 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "Siz hozir logout qildingiz!")
     return redirect('login')

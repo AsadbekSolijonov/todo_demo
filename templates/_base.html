@@ -146,17 +146,17 @@
         var exampleModalEdit = document.getElementById('exampleModalEdit');
         exampleModalEdit.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
-            var taskId = button.getAttribute('data-task-id');
-            var taskTitle = button.getAttribute('data-task-title');
-            var taskDescription = button.getAttribute('data-task-description');
-            var taskDone = button.getAttribute('data-task-done') === 'True';
-            var taskDeleted = button.getAttribute('data-task-deleted') === 'True';
+            var taskId = button.getAttribute('data-task-id');  // 12
+            var taskTitle = button.getAttribute('data-task-title');   // Celery 3
+            var taskDescription = button.getAttribute('data-task-description');  //
+            var taskDone = button.getAttribute('data-task-done') === 'True';  // False
+            var taskDeleted = button.getAttribute('data-task-deleted') === 'True'; // False
 
-            var modalTitleInput = exampleModalEdit.querySelector('#editTaskTitle');
-            var modalDescriptionInput = exampleModalEdit.querySelector('#editTaskDescription');
-            var modalDoneInput = exampleModalEdit.querySelector('#editTaskDone');
-            var modalDeletedInput = exampleModalEdit.querySelector('#editTaskDeleted');
-            var modalTaskIdInput = exampleModalEdit.querySelector('#editTaskId');
+            var modalTitleInput = exampleModalEdit.querySelector('#editTaskTitle');  // ''
+            var modalDescriptionInput = exampleModalEdit.querySelector('#editTaskDescription'); // ''
+            var modalDoneInput = exampleModalEdit.querySelector('#editTaskDone'); // ''
+            var modalDeletedInput = exampleModalEdit.querySelector('#editTaskDeleted'); // ''
+            var modalTaskIdInput = exampleModalEdit.querySelector('#editTaskId');  // ''
 
             modalTitleInput.value = taskTitle;
             modalDescriptionInput.value = taskDescription;
@@ -165,6 +165,10 @@
             modalTaskIdInput.value = taskId;
         });
 
+    });
+
+    // MODAL DELETE SCRIPT
+    document.addEventListener('DOMContentLoaded', function () {
         var exampleModalDelete = document.getElementById('exampleModalDelete');
         exampleModalDelete.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
@@ -172,7 +176,7 @@
 
             var modalTaskIdInput = exampleModalDelete.querySelector('#deleteTaskId');
             modalTaskIdInput.value = taskId;
-        });
+        })
     });
 
 </script>
